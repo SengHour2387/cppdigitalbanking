@@ -19,4 +19,23 @@ class Account {
         }
 };
 
+class SavingsAccount : public Account {
+    double interestRate;
+    public:
+        SavingsAccount() {};
+        SavingsAccount(int accountNumber, double balance, double interestRate) : Account(accountNumber, balance) {
+            this->interestRate = interestRate;
+        }
+};
+
+
+class CheckingAccount : public Account {
+    double overdraftLimit;
+    public:
+        CheckingAccount() {};
+        CheckingAccount(int accountNumber, double balance, double overdraftLimit) : Account(accountNumber, balance) {
+            this->overdraftLimit = overdraftLimit;
+        }
+};
+
 #endif
