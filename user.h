@@ -11,7 +11,6 @@ class User {
     string email;
     string password;
 
-
     public:
         User() {};
         User(int id, string name, string email, string password) {
