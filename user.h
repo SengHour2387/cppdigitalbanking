@@ -2,7 +2,9 @@
 #define USER_H
 
 using namespace std;
+#include <vector>
 #include <transaction.h>
+#include <account.h>
 #include <iostream>
 
 class User {
@@ -10,6 +12,9 @@ class User {
     string name; 
     string email;
     string password;
+
+    vector<Account> allAccount;
+
     public:
         User() {};
         User(int id, string name, string email, string password) {
@@ -27,9 +32,12 @@ class User {
         string getPassword() {
             return password;
         }
-
         int getID() {
             return id;
+        }
+
+        void addAccount( Account account ) {
+            allAccount.push_back(account);
         }
 };
 

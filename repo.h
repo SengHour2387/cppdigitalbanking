@@ -38,6 +38,17 @@ class Repo {
             }
         }
 
+        User findUser( int id ) {
+            auto it = find_if(all_user.begin(), all_user.end(),
+            [id](User& user) { return user.getID() == id; });
+            return it[0]; 
+        }
+        User findUser( string email ) {
+            auto it = find_if(all_user.begin(), all_user.end(),
+            [email](User& user) { return user.getEmail() == email; });
+            return it[0];
+        }   
+
         void updateUser(int id, const User& updatedUser) {
             auto it = std::find_if(all_user.begin(), all_user.end(),
             [id](User& user) { return user.getID() == id; });
@@ -50,6 +61,5 @@ class Repo {
             std::cout << "User with ID " << id << " not found." << std::endl;
             }
         }
-
 };
 #endif

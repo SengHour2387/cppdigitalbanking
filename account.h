@@ -5,16 +5,27 @@ using namespace std;
 #include <iostream>
 #include <vector>
 
+enum Currency {
+    KHR,
+    USD,
+};
+
 class Account {
-    int accountNumber;
+    static int accountNumber;
     double balance;
+
+    Currency currency;
 
     vector<Transaction> transactions;
 
     public:
-        Account() {};
-        Account(int accountNumber, double balance) {
-            this->accountNumber = accountNumber;
+        Account(Currency current) {
+            this->balance = 0;
+            accountNumber++;
+        };
+        Account( double balance ,Currency current ) {
+
+            accountNumber++;
             this->balance = balance;
         }
 };
@@ -22,8 +33,8 @@ class Account {
 class SavingsAccount : public Account {
     double interestRate;
     public:
-        SavingsAccount() {};
-        SavingsAccount(int accountNumber, double balance, double interestRate) : Account(accountNumber, balance) {
+        SavingsAccount(Currency currency):Account(currency) {};
+        SavingsAccount(double balance, double interestRate,Currency currency) : Account( balance,currency) {
             this->interestRate = interestRate;
         }
 };
@@ -32,8 +43,8 @@ class SavingsAccount : public Account {
 class CheckingAccount : public Account {
     double overdraftLimit;
     public:
-        CheckingAccount() {};
-        CheckingAccount(int accountNumber, double balance, double overdraftLimit) : Account(accountNumber, balance) {
+        CheckingAccount(Currency currency):Account(currency) {};
+        CheckingAccount(double balance, double overdraftLimit,Currency currency) : Account( balance,currency) {
             this->overdraftLimit = overdraftLimit;
         }
 };
