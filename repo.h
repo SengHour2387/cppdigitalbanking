@@ -3,15 +3,15 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <user.h>
-#include <fileManager.h>
-#include <transaction.h>
-#include <account.h>
+#include "user.h"
+#include "fileManager.h"
+#include "transaction.h"
+#include "account.h"
 
 using namespace std;
 
 class Repo {
-    FileManager file;
+    FileManager file = FileManager();
 
     vector<User> all_user;
 

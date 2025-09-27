@@ -1,11 +1,11 @@
 #include <iostream>
-#include <user.h>
-#include <bank.h>
+#include "user.h"
+#include "console.h"
+#include "bank.h"
 using namespace std;
 
 int main() {
     Bank bank = Bank();
-
-    bank.signUp();
-
+    BankConsole::displayMenu();
+    return 0;
 }

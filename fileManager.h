@@ -3,9 +3,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <user.h>
-#include <transaction.h>
-#include <account.h>
+#include "user.h"
+#include "transaction.h"
+#include "account.h"
 
 using namespace std;
 
@@ -15,7 +15,11 @@ class FileManager {
     
     public:
         FileManager() {
-            streamer.open("all_user.bin",ios::binary|ios::trunc);
+            streamer.open("all_user.bin",ios::binary|ios::in|ios::out|ios::trunc);
+            if(!streamer) {
+                cout << "Error creating file!" << endl;
+                exit(1);
+            }
         }
         void saveData( vector<User> all_user ) {
             size_t size = all_user.size();

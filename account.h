@@ -1,7 +1,7 @@
 #ifndef    ACOUNT_H
 #define    ACOUNT_H
 using namespace std;
-#include <transaction.h>
+#include "transaction.h"
 #include <iostream>
 #include <vector>
 
@@ -11,7 +11,8 @@ enum Currency {
 };
 
 class Account {
-    static int accountNumber;
+    protected:
+    int accountNumber = 0;
     double balance;
 
     Currency currency;
@@ -21,10 +22,9 @@ class Account {
     public:
         Account(Currency current) {
             this->balance = 0;
-            accountNumber++;
+            accountNumber ++;
         };
         Account( double balance ,Currency current ) {
-
             accountNumber++;
             this->balance = balance;
         }

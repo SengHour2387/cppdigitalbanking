@@ -1,9 +1,9 @@
 #ifndef BANK_H
 #define BANK_H
-
-#include <user.h>
+#include <iostream>
+#include "user.h"
 #include <vector>
-#include <repo.h>
+#include "repo.h"
 using namespace std;
 class Bank {
 
@@ -11,8 +11,7 @@ class Bank {
     public:
     User currentUser = User();
 
-    Bank() {
-    }
+    Bank() {};
 
         void signUp() {
             User user = User();
