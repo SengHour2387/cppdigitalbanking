@@ -16,6 +16,17 @@ class User {
     vector<Account> allAccount;
 
     public:
+
+        void setName(string name) {
+            this->name = name;
+        }
+        void setEmail(string email) {
+            this->email = email;
+        }
+        void setPassword(string password) {
+            this->password = password;
+        }
+
         User() {};
         User(int id, string name, string email, string password) {
             this->id = id;

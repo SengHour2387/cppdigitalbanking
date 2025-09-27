@@ -61,5 +61,9 @@ class Repo {
             std::cout << "User with ID " << id << " not found." << std::endl;
             }
         }
+
+        void save() {
+            file.saveData(all_user);
+        }
 };
 #endif
