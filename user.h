@@ -3,18 +3,17 @@
 
 using namespace std;
 #include <vector>
-#include "transaction.h"
-#include "account.h"
 #include <iostream>
+#include "account.h"
 
 class User {
     int id;
-    string name; 
+    string name;
     string email;
     string password;
 
-    vector<Account> allAccount;
-
+    vector<int> allAccount;
+    
     public:
 
         void setName(string name) {
@@ -34,6 +33,11 @@ class User {
             this->email = email;
             this->password = password;
         };
+
+        vector<int> getAllAccount() {
+            return allAccount;
+        }
+
         string getName() {
             return name;
         }
@@ -47,8 +51,8 @@ class User {
             return id;
         }
 
-        void addAccount( Account account ) {
-            allAccount.push_back(account);
+        void addAccount( int accountID) {
+            allAccount.push_back(accountID);
         }
 };
 

@@ -2,6 +2,7 @@
 #define   CONSOLE_H
 #include <iostream>
 #include <string>
+#include "user.h"
 
 using namespace std;
 
@@ -19,6 +20,23 @@ class BankConsole {
         int choice;
         cin >> choice;
         return choice;
+    }
+
+    static User getUserInput() {
+        string name, email, password;
+        int id;
+
+        cout << "Enter your name: ";
+        cin >> name;
+        cout<< "Enter your id: ";
+        cin >> id;
+        cout << "Enter your email: ";
+        cin >> email;
+        cout << "Enter your password: ";
+        cin >> password;
+
+        User user = User(id, name, email, password);
+        return user;
     }
 };
 

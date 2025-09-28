@@ -1,31 +1,46 @@
 #ifndef    ACOUNT_H
 #define    ACOUNT_H
 using namespace std;
-#include "transaction.h"
 #include <iostream>
 #include <vector>
-
-enum Currency {
-    KHR,
-    USD,
-};
 
 class Account {
     protected:
     int accountNumber = 0;
     double balance;
-
-    Currency currency;
-
-    vector<Transaction> transactions;
+    int type = 1;
 
     public:
-        Account(Currency current) {
+
+
+        double getBalance() {
+            return balance;
+        }
+
+        int getType() {
+            return type;
+        } 
+
+        vector<int> getAllTransaction() {
+            return transactionIDs;
+        }
+
+        void addTransaction( int transactionId ) {
+            transactionIDs.push_back(transactionId);
+        }
+
+        int getAccountNumber() {
+            return accountNumber;
+        }
+
+        Account() {
             this->balance = 0;
             accountNumber ++;
         };
-        Account( double balance ,Currency current ) {
+        Account( double balance, int accountNumber, int type) {
             accountNumber++;
+            this->type = type;
+            this->accountNumber = accountNumber;
             this->balance = balance;
         }
 };
@@ -33,8 +48,12 @@ class Account {
 class SavingsAccount : public Account {
     double interestRate;
     public:
-        SavingsAccount(Currency currency):Account(currency) {};
-        SavingsAccount(double balance, double interestRate,Currency currency) : Account( balance,currency) {
+        double getInterestRate() {
+            return interestRate;
+        }
+        SavingsAccount():Account() {};
+        SavingsAccount(double balance, double interestRate,int accountNum) 
+        : Account(balance, accountNum,0) {
             this->interestRate = interestRate;
         }
 };
@@ -43,8 +62,12 @@ class SavingsAccount : public Account {
 class CheckingAccount : public Account {
     double overdraftLimit;
     public:
-        CheckingAccount(Currency currency):Account(currency) {};
-        CheckingAccount(double balance, double overdraftLimit,Currency currency) : Account( balance,currency) {
+        double getOverdraftLimit() {
+            return overdraftLimit;
+        }
+        CheckingAccount():Account() {};
+        CheckingAccount(double balance, double overdraftLimit,int accountNum) 
+        : Account(balance, accountNum,1) {
             this->overdraftLimit = overdraftLimit;
         }
 };

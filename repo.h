@@ -5,24 +5,32 @@
 #include <vector>
 #include "user.h"
 #include "fileManager.h"
-#include "transaction.h"
 #include "account.h"
 
 using namespace std;
 
 class Repo {
-    FileManager file = FileManager();
+    FileManager file;
 
     vector<User> all_user;
+    vector<Account> all_account;
+    vector<Transaction> all_transaction;
 
     public:
         Repo() {
-            all_user = file.loadAll();
+            all_user = file.loadUsers();
+            all_account = file.loadAccount();
+        }
+
+        void addAccount( Account account ) {
+            all_account.push_back(account);
+            file.saveAccount(all_account);
+            cout << "account: " << account.getAccountNumber() << " is added."<<endl;
         }
     
         void addUser( User user ) {
         all_user.push_back(user);
-            cout << "user: " << user.getEmail() << "is added."<<endl;
+            cout << "user: " << user.getEmail() << " is added."<<endl;
         }
 
         void removeUser(int id) {
@@ -32,10 +40,17 @@ class Repo {
             if (it != all_user.end()) {
                 cout << "User with ID " << id << " removed." << std::endl;
                 all_user.erase(it);
-                Optionally: file.saveData(all_user);
+                file.saveUsers(all_user);
             } else {
                 cout << "User with ID " << id << " not found." << std::endl;
             }
+        }
+
+        vector<User> getAllUsers() {
+            return all_user;
+        }
+        vector<Account> getAllAccounts() {
+            return all_account;
         }
 
         User findUser( int id ) {
@@ -56,14 +71,15 @@ class Repo {
             if (it != all_user.end()) {
                 *it = updatedUser;
                 std::cout << "User with ID " << id << " updated." << std::endl;
-                file.saveData(all_user);
+                file.saveUsers(all_user);
             } else {
             std::cout << "User with ID " << id << " not found." << std::endl;
             }
         }
 
         void save() {
-            file.saveData(all_user);
+            file.saveUsers(all_user);
+            file.saveAccount(all_account);
         }
 };
 #endif
