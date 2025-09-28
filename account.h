@@ -21,24 +21,14 @@ class Account {
             return type;
         } 
 
-        vector<int> getAllTransaction() {
-            return transactionIDs;
-        }
-
-        void addTransaction( int transactionId ) {
-            transactionIDs.push_back(transactionId);
-        }
-
         int getAccountNumber() {
             return accountNumber;
         }
 
         Account() {
             this->balance = 0;
-            accountNumber ++;
         };
         Account( double balance, int accountNumber, int type) {
-            accountNumber++;
             this->type = type;
             this->accountNumber = accountNumber;
             this->balance = balance;

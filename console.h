@@ -22,6 +22,19 @@ class BankConsole {
         return choice;
     }
 
+    static int displayUserMenu() {
+        cout << "User Menu" << endl;
+        cout << "1. View Account" << endl;
+        cout << "2. Deposit" << endl;
+        cout << "3. Withdraw" << endl;
+        cout << "5. Logout" << endl;
+        cout << "Please select an option: ";
+
+        int choice;
+        cin >> choice;
+        return choice;
+    }
+
     static User getUserInput() {
         string name, email, password;
         int id;

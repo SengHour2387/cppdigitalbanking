@@ -13,18 +13,23 @@ class Repo {
     FileManager file;
 
     vector<User> all_user;
-    vector<Account> all_account;
-    vector<Transaction> all_transaction;
+    vector<SavingsAccount> all_saving_account;
+    vector<CheckingAccount> all_checking_account;
 
     public:
         Repo() {
             all_user = file.loadUsers();
-            all_account = file.loadAccount();
+            all_saving_account = file.loadAccountSavingAcc();
+            all_checking_account = file.loadAccountCheckingAcc();
         }
 
-        void addAccount( Account account ) {
-            all_account.push_back(account);
-            file.saveAccount(all_account);
+        void addSavingAcc( SavingsAccount account ) {
+        all_saving_account.push_back(account);
+            cout << "account: " << account.getAccountNumber() << " is added."<<endl;
+        }
+
+        void addCheckingAcc( CheckingAccount account ) {
+        all_checking_account.push_back(account);
             cout << "account: " << account.getAccountNumber() << " is added."<<endl;
         }
     
@@ -49,8 +54,13 @@ class Repo {
         vector<User> getAllUsers() {
             return all_user;
         }
-        vector<Account> getAllAccounts() {
-            return all_account;
+
+        vector<SavingsAccount> getAllSavingAcc() {
+            return all_saving_account;
+        }
+
+        vector<CheckingAccount> getAllCheckingAcc() {
+            return all_checking_account;
         }
 
         User findUser( int id ) {
@@ -78,8 +88,9 @@ class Repo {
         }
 
         void save() {
+            file.saveAccountSavingAcc(all_saving_account);
+            file.saveAccountCheckingAcc(all_checking_account);
             file.saveUsers(all_user);
-            file.saveAccount(all_account);
         }
 };
 #endif

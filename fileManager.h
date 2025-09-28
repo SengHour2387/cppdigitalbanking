@@ -11,53 +11,91 @@ using namespace std;
 
 class FileManager {
 public:
-    FileManager() {
-        
-    }
-
-    void saveAccount( const vector<Account>& all_account ) {
-        ofstream file("all_account.bin");
+    FileManager() {}
+    void saveAccountCheckingAcc( const vector<CheckingAccount>& all_account ) {
+        ofstream file("all_checking_account.bin");
         size_t allSize = all_account.size();
         file.write(reinterpret_cast<const char*>(&allSize), sizeof(allSize));
-        for (Account account : all_account) {
-
+        for (CheckingAccount account : all_account) {
             size_t accountNumber = account.getAccountNumber();
             size_t balance = account.getBalance();
             size_t type = account.getType();
+            size_t overdraftLimit = account.getOverdraftLimit();
             file.write(reinterpret_cast<const char*>(&accountNumber), sizeof(accountNumber));
             file.write(reinterpret_cast<const char*>(&balance), sizeof(balance));
             file.write(reinterpret_cast<const char*>(&type), sizeof(type));
+            file.write(reinterpret_cast<const char*>(&overdraftLimit), sizeof(overdraftLimit));
         }
 
     }
+    vector<CheckingAccount> loadAccountCheckingAcc() {
+        vector<CheckingAccount> all_account;
+        ifstream file("all_checking_account.bin");
+        if (file) {
+            size_t allSize;
+            file.read(reinterpret_cast<char*>(&allSize), sizeof(allSize));
+            for (size_t i = 0; i < allSize; ++i) {
+                size_t accountNumber;
+                size_t balance;
+                size_t type;
+                size_t overdraftLimit;
 
-        vector<Account> loadAccount() {
-            vector<Account> all_account;
-            ifstream file("all_account.bin");
-    
-            if (file) {
-                size_t allSize;
-                file.read(reinterpret_cast<char*>(&allSize), sizeof(allSize));
-                for (size_t i = 0; i < allSize; ++i) {
-                    size_t accountNumber;
-                    size_t balance;
-                    size_t transactionCount;
-    
-                    file.read(reinterpret_cast<char*>(&accountNumber), sizeof(accountNumber));
-                    file.read(reinterpret_cast<char*>(&balance), sizeof(balance));
-    
-                    Account account(balance,accountNumber);
-                    all_account.push_back(account);
-                }
-                cout << "Account data loaded successfully." << endl;
-            } else {
-                cout << "No existing account data found." << endl;
+                file.read(reinterpret_cast<char*>(&accountNumber), sizeof(accountNumber));
+                file.read(reinterpret_cast<char*>(&balance), sizeof(balance));
+                file.read(reinterpret_cast<char*>(&type), sizeof(type));
+                file.read(reinterpret_cast<char*>(&overdraftLimit), sizeof(overdraftLimit));
+
+                CheckingAccount account(balance,overdraftLimit,accountNumber);
+                all_account.push_back(account);
             }
-    
-            return all_account;
+            cout << "Checking Account data loaded successfully." << endl;
+        } else {
+            cout << "No existing checking account data found." << endl;
         }
-        
+        return all_account;
+    }    
+    void saveAccountSavingAcc( const vector<SavingsAccount>& all_account ) {
+        ofstream file("all_saving_account.bin");
+        size_t allSize = all_account.size();
+        file.write(reinterpret_cast<const char*>(&allSize), sizeof(allSize));
+        for (SavingsAccount account : all_account) {
+            size_t accountNumber = account.getAccountNumber();
+            size_t balance = account.getBalance();
+            size_t type = account.getType();
+            size_t interestRate = account.getInterestRate();
+            file.write(reinterpret_cast<const char*>(&accountNumber), sizeof(accountNumber));
+            file.write(reinterpret_cast<const char*>(&balance), sizeof(balance));
+            file.write(reinterpret_cast<const char*>(&type), sizeof(type));
+            file.write(reinterpret_cast<const char*>(&interestRate), sizeof(interestRate));
+        }
 
+    }
+    vector<SavingsAccount> loadAccountSavingAcc() {
+        vector<SavingsAccount> all_account;
+        ifstream file("all_saving_account.bin");
+        if (file) {
+            size_t allSize;
+            file.read(reinterpret_cast<char*>(&allSize), sizeof(allSize));
+            for (size_t i = 0; i < allSize; ++i) {
+                size_t accountNumber;
+                size_t balance;
+                size_t type;
+                size_t interestRate;
+                file.read(reinterpret_cast<char*>(&accountNumber), sizeof(accountNumber));
+                file.read(reinterpret_cast<char*>(&balance), sizeof(balance));
+                file.read(reinterpret_cast<char*>(&type), sizeof(type));
+                file.read(reinterpret_cast<char*>(&interestRate), sizeof(interestRate));
+
+                SavingsAccount account = SavingsAccount(balance,interestRate,accountNumber);
+                all_account.push_back(account);
+            }
+            cout << allSize <<"Saving Account data loaded successfully." << endl;
+        } else {
+            cout << "No existing saving account data found." << endl;
+        }
+        return all_account;
+    }    
+    
     void saveUsers(const vector<User>& all_user) {
         ofstream file("all_user.bin");
         size_t allSize = all_user.size();
