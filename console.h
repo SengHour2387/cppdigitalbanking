@@ -47,7 +47,6 @@ class BankConsole {
         cin >> email;
         cout << "Enter your password: ";
         cin >> password;
-
         User user = User(id, name, email, password);
         return user;
     }

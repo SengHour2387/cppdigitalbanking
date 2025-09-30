@@ -9,9 +9,7 @@ class Account {
     int accountNumber = 0;
     double balance;
     int type = 1;
-
     public:
-
 
         double getBalance() {
             return balance;
@@ -33,6 +31,19 @@ class Account {
             this->accountNumber = accountNumber;
             this->balance = balance;
         }
+
+        bool deposit( User user, float amout ) {
+            vector<int> ids = user.getAllAccount();
+            for( int& id : ids  ) {
+                if( id == accountNumber ) {
+                    balance += amout;
+                    return true;
+                }
+            }
+            cout << user.getEmail() << " doesn't own this account!! "<<endl;
+            return false;
+        }
+
 };
 
 class SavingsAccount : public Account {
@@ -59,6 +70,18 @@ class CheckingAccount : public Account {
         CheckingAccount(double balance, double overdraftLimit,int accountNum) 
         : Account(balance, accountNum,1) {
             this->overdraftLimit = overdraftLimit;
+        }
+
+        bool withdraw( User user , float amount) {
+            if( balance > amount ) {
+            for( int& id : user.getAllAccount()) {
+                    if( id == accountNumber ) {
+                    balance -= amount;
+                    return true;
+                    }
+                }
+            }
+            return false;
         }
 };
 

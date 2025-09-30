@@ -18,6 +18,10 @@ class Bank {
             repo.addUser(user);
         }
 
+        void deposit() {
+            
+        }
+
         bool login(string email, string passsword) {
             User user = repo.findUser( email );
             currentUser = user;
