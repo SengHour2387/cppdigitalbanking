@@ -4,6 +4,7 @@
 #include "user.h"
 #include <vector>
 #include "repo.h"
+#include <chrono>
 using namespace std;
 class Bank {
     Repo repo = Repo();
@@ -18,8 +19,20 @@ class Bank {
             repo.addUser(user);
         }
 
-        void deposit() {
-            
+        void deposit( double amount, int accountID ) {
+            Account acc = repo.findAccount( accountID );
+            acc.deposit( currentUser,amount );
+        }
+
+        void addSavingAcc( SavingsAccount account ) {
+            repo.addSavingAcc(account);
+            currentUser.addAccount(account.getAccountNumber());
+            repo.updateUser(currentUser.getID(), currentUser);
+        }
+        void addCheckingAcc( CheckingAccount account ) {
+            repo.addCheckingAcc(account);
+            currentUser.addAccount(account.getAccountNumber());
+            repo.updateUser(currentUser.getID(), currentUser);
         }
 
         bool login(string email, string passsword) {

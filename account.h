@@ -1,8 +1,9 @@
-#ifndef    ACOUNT_H
-#define    ACOUNT_H
+#ifndef    ACCOUNT_H
+#define    ACCOUNT_H
 using namespace std;
 #include <iostream>
 #include <vector>
+#include "user.h"
 
 class Account {
     protected:
@@ -32,7 +33,7 @@ class Account {
             this->balance = balance;
         }
 
-        bool deposit( User user, float amout ) {
+        bool deposit( User user, double amout ) {
             vector<int> ids = user.getAllAccount();
             for( int& id : ids  ) {
                 if( id == accountNumber ) {
@@ -72,7 +73,7 @@ class CheckingAccount : public Account {
             this->overdraftLimit = overdraftLimit;
         }
 
-        bool withdraw( User user , float amount) {
+        bool withdraw( User user, double amount) {
             if( balance > amount ) {
             for( int& id : user.getAllAccount()) {
                     if( id == accountNumber ) {

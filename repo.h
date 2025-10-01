@@ -68,6 +68,21 @@ class Repo {
             [id](User& user) { return user.getID() == id; });
             return it[0]; 
         }
+
+        Account findAccount( int accountID ) {
+            for( SavingsAccount& acc : all_saving_account ) {
+                if( acc.getAccountNumber() == accountID ) {
+                    return acc;
+                }
+            }
+            for( CheckingAccount& acc : all_checking_account ) {
+                if( acc.getAccountNumber() == accountID ) {
+                    return acc;
+                }
+            }
+            return Account();
+        }
+
         User findUser( string email ) {
             auto it = find_if(all_user.begin(), all_user.end(),
             [email](User& user) { return user.getEmail() == email; });

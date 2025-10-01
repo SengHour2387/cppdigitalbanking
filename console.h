@@ -50,6 +50,22 @@ class BankConsole {
         User user = User(id, name, email, password);
         return user;
     }
+
+
+    static SavingsAccount getSavingAccInput() {
+        double balance, interestRate;
+        int accountNum;
+
+        cout << "Enter initial balance: ";
+        cin >> balance;
+        cout << "Enter interest rate (as a decimal, e.g., 0.05 for 5%): ";
+        cin >> interestRate;
+        cout << "Enter account number: ";
+        cin >> accountNum;
+
+        SavingsAccount account = SavingsAccount(balance, interestRate, accountNum);
+        return account;
+    }
 };
 
 #endif
