@@ -6,17 +6,19 @@
 #include "user.h"
 #include "fileManager.h"
 #include "account.h"
+#include <algorithm>
+
 
 using namespace std;
 
 class Repo {
     FileManager file;
-
     vector<User> all_user;
     vector<SavingsAccount> all_saving_account;
     vector<CheckingAccount> all_checking_account;
 
     public:
+
         Repo() {
             all_user = file.loadUsers();
             all_saving_account = file.loadAccountSavingAcc();
@@ -36,6 +38,23 @@ class Repo {
         void addUser( User user ) {
         all_user.push_back(user);
             cout << "user: " << user.getEmail() << " is added."<<endl;
+        }
+                void updateAccount(const SavingsAccount& updatedAcc) {
+            for (auto& acc : all_saving_account) {
+                if (acc.getAccountNumber() == updatedAcc.getAccountNumber()) {
+                    acc = updatedAcc;
+                    return;
+                }
+            }
+        }
+
+        void updateAccount(const CheckingAccount& updatedAcc) {
+            for (auto& acc : all_checking_account) {
+                if (acc.getAccountNumber() == updatedAcc.getAccountNumber()) {
+                    acc = updatedAcc;
+                    return;
+                }
+            }
         }
 
         void removeUser(int id) {

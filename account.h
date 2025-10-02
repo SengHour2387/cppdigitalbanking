@@ -12,15 +12,15 @@ class Account {
     int type = 1;
     public:
 
-        double getBalance() {
+        double getBalance() const {
             return balance;
         }
 
-        int getType() {
+        int getType() const {
             return type;
         } 
 
-        int getAccountNumber() {
+        int getAccountNumber() const {
             return accountNumber;
         }
 
@@ -34,7 +34,13 @@ class Account {
         }
 
         bool withdraw( User user, double amount) {
-
+            if (balance >= amount)
+            {
+                balance -= amount;
+                return true;
+            }
+            return false;
+            
         }
 
         bool deposit( User user, double amout ) {
@@ -54,7 +60,7 @@ class Account {
 class SavingsAccount : public Account {
     double interestRate;
     public:
-        double getInterestRate() {
+        double getInterestRate() const {
             return interestRate;
         }
         SavingsAccount():Account() {};
@@ -68,7 +74,7 @@ class SavingsAccount : public Account {
 class CheckingAccount : public Account {
     double overdraftLimit;
     public:
-        double getOverdraftLimit() {
+        double getOverdraftLimit() const {
             return overdraftLimit;
         }
         CheckingAccount():Account() {};
