@@ -33,6 +33,10 @@ class Account {
             this->balance = balance;
         }
 
+        bool withdraw( User user, double amount) {
+
+        }
+
         bool deposit( User user, double amout ) {
             vector<int> ids = user.getAllAccount();
             for( int& id : ids  ) {
