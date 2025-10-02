@@ -15,7 +15,7 @@ public:
         for (auto& acc : savings) {
             if (acc.getAccountNumber() == accountID) {
                 acc.withdraw(currentUser, amount);
-                repo.updateAccount(acc);
+                repo.updateSavingAccount(acc);
                 return;
             }
         }
@@ -24,7 +24,7 @@ public:
         for (auto& acc : checking) {
             if (acc.getAccountNumber() == accountID) {
                 acc.withdraw(currentUser, amount);
-                repo.updateAccount(acc);
+                repo.updateCheckingAccount(acc);
                 return;
             }
         }
@@ -70,9 +70,14 @@ public:
     Bank() {};
 
         void signUp(User user) {             
-            Account usd = CheckingAccount();
+            CheckingAccount usd = CheckingAccount(
+                0, 10, chrono::system_clock::now().time_since_epoch().count()
+            );
+        
             user.addAccount(usd.getAccountNumber());
             repo.addUser(user);
+            repo.addCheckingAcc(usd);
+            repo.save();
         }
 
         void deposit(double amount, int accountID) {
@@ -80,7 +85,7 @@ public:
             for (auto& acc : savings) {
                 if (acc.getAccountNumber() == accountID) {
                     acc.deposit(currentUser, amount);
-                    repo.updateAccount(acc);
+                    repo.updateSavingAccount(acc);
                     return;
                 }
             }
@@ -88,7 +93,7 @@ public:
             for (auto& acc : checking) {
                 if (acc.getAccountNumber() == accountID) {
                     acc.deposit(currentUser, amount);
-                    repo.updateAccount(acc);
+                    repo.updateCheckingAccount(acc);
                     return;
                 }
             }

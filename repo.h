@@ -21,6 +21,11 @@ class Repo {
 
         Repo() {
             all_user = file.loadUsers();
+
+            for( User& user : all_user ) {
+                cout << "User: " << user.getEmail() << " loaded." << endl;
+            }
+
             all_saving_account = file.loadAccountSavingAcc();
             all_checking_account = file.loadAccountCheckingAcc();
         }
@@ -39,8 +44,9 @@ class Repo {
         all_user.push_back(user);
             cout << "user: " << user.getEmail() << " is added."<<endl;
         }
-                void updateAccount(const SavingsAccount& updatedAcc) {
-            for (auto& acc : all_saving_account) {
+
+        void updateCheckingAccount(const CheckingAccount& updatedAcc) {
+            for (auto& acc : all_checking_account) {
                 if (acc.getAccountNumber() == updatedAcc.getAccountNumber()) {
                     acc = updatedAcc;
                     return;
@@ -48,8 +54,8 @@ class Repo {
             }
         }
 
-        void updateAccount(const CheckingAccount& updatedAcc) {
-            for (auto& acc : all_checking_account) {
+        void updateSavingAccount(const SavingsAccount& updatedAcc) {
+            for (auto& acc : all_saving_account) {
                 if (acc.getAccountNumber() == updatedAcc.getAccountNumber()) {
                     acc = updatedAcc;
                     return;

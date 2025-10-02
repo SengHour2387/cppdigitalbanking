@@ -83,17 +83,25 @@ class CheckingAccount : public Account {
             this->overdraftLimit = overdraftLimit;
         }
 
-        bool withdraw( User user, double amount) {
-            if( balance > amount ) {
-            for( int& id : user.getAllAccount()) {
-                    if( id == accountNumber ) {
+        bool withdraw(User user, double amount) {
+        vector<int> ids = user.getAllAccount();
+        for (int& id : ids) {
+            if (id == accountNumber) {
+                if (balance + overdraftLimit >= amount) {
                     balance -= amount;
+                    cout << "Withdrawn $" << amount << " successfully. New balance: $" << balance << endl;
+                    if (balance < 0)
+                        cout << "Warning: You are using $" << -balance << " of your overdraft limit." << endl;
                     return true;
-                    }
+                } else {
+                    cout << "Withdrawal failed: Exceeds overdraft limit!" << endl;
+                    return false;
                 }
             }
-            return false;
         }
+        cout << user.getEmail() << " doesn't own this account!!" << endl;
+        return false;
+    }
 };
 
 #endif
