@@ -48,12 +48,11 @@ public:
                 CheckingAccount account(balance,overdraftLimit,accountNumber);
                 all_account.push_back(account);
             }
-            cout << "Checking Account data loaded successfully." << endl;
         } else {
             cout << "No existing checking account data found." << endl;
         }
         return all_account;
-    }    
+    }     
     void saveAccountSavingAcc( const vector<SavingsAccount>& all_account ) {
         ofstream file("all_saving_account.bin");
         size_t allSize = all_account.size();

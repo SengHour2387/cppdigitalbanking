@@ -45,21 +45,35 @@ class Repo {
             cout << "user: " << user.getEmail() << " is added."<<endl;
         }
 
-        void updateCheckingAccount(const CheckingAccount& updatedAcc) {
-            for (auto& acc : all_checking_account) {
-                if (acc.getAccountNumber() == updatedAcc.getAccountNumber()) {
-                    acc = updatedAcc;
-                    return;
-                }
+        void updateCheckingAccount(const CheckingAccount updatedAcc) {
+            auto it = find_if( all_checking_account.begin(),all_checking_account.end(),
+            [updatedAcc](CheckingAccount& acc) { return acc.getAccountNumber() == updatedAcc.getAccountNumber();});
+
+            if( it != all_checking_account.end()) {
+                *it = updatedAcc;
+                file.saveAccountCheckingAcc(all_checking_account);
+            }
+        }
+        void updateUser(int id, const User& updatedUser) {
+            auto it = find_if(all_user.begin(), all_user.end(),
+            [id](User& user) { return user.getID() == id; });
+        
+            if (it != all_user.end()) {
+                *it = updatedUser;
+                std::cout << "User with ID " << id << " updated." << std::endl;
+                file.saveUsers(all_user);
+            } else {
+            std::cout << "User with ID " << id << " not found." << std::endl;
             }
         }
 
-        void updateSavingAccount(const SavingsAccount& updatedAcc) {
-            for (auto& acc : all_saving_account) {
-                if (acc.getAccountNumber() == updatedAcc.getAccountNumber()) {
-                    acc = updatedAcc;
-                    return;
-                }
+        void updateSavingAccount(const SavingsAccount updatedAcc) {
+            auto it = find_if( all_saving_account.begin(),all_saving_account.end(),
+            [updatedAcc](SavingsAccount& acc) { return acc.getAccountNumber() == updatedAcc.getAccountNumber();});
+
+            if( it != all_saving_account.end()) {
+                *it = updatedAcc;
+                file.saveAccountSavingAcc(all_saving_account);
             }
         }
 
@@ -114,18 +128,7 @@ class Repo {
             return it[0];
         }   
 
-        void updateUser(int id, const User& updatedUser) {
-            auto it = std::find_if(all_user.begin(), all_user.end(),
-            [id](User& user) { return user.getID() == id; });
         
-            if (it != all_user.end()) {
-                *it = updatedUser;
-                std::cout << "User with ID " << id << " updated." << std::endl;
-                file.saveUsers(all_user);
-            } else {
-            std::cout << "User with ID " << id << " not found." << std::endl;
-            }
-        }
 
         void save() {
             file.saveAccountSavingAcc(all_saving_account);

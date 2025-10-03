@@ -68,6 +68,9 @@ class SavingsAccount : public Account {
         : Account(balance, accountNum,0) {
             this->interestRate = interestRate;
         }
+
+        
+
 };
 
 
@@ -82,6 +85,7 @@ class CheckingAccount : public Account {
         : Account(balance, accountNum,1) {
             this->overdraftLimit = overdraftLimit;
         }
+
 
         bool withdraw(User user, double amount) {
         vector<int> ids = user.getAllAccount();

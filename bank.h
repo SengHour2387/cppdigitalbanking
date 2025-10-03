@@ -14,8 +14,9 @@ public:
         vector<SavingsAccount> savings = repo.getAllSavingAcc();
         for (auto& acc : savings) {
             if (acc.getAccountNumber() == accountID) {
-                acc.withdraw(currentUser, amount);
-                repo.updateSavingAccount(acc);
+                 acc.withdraw(currentUser, amount);
+                 SavingsAccount updatedAcc =  acc;
+                repo.updateSavingAccount(updatedAcc);
                 return;
             }
         }
@@ -24,7 +25,8 @@ public:
         for (auto& acc : checking) {
             if (acc.getAccountNumber() == accountID) {
                 acc.withdraw(currentUser, amount);
-                repo.updateCheckingAccount(acc);
+                CheckingAccount updatedAcc = acc;
+                repo.updateCheckingAccount(updatedAcc);
                 return;
             }
         }
@@ -73,7 +75,6 @@ public:
             CheckingAccount usd = CheckingAccount(
                 0, 10, chrono::system_clock::now().time_since_epoch().count()
             );
-        
             user.addAccount(usd.getAccountNumber());
             repo.addUser(user);
             repo.addCheckingAcc(usd);
@@ -85,7 +86,8 @@ public:
             for (auto& acc : savings) {
                 if (acc.getAccountNumber() == accountID) {
                     acc.deposit(currentUser, amount);
-                    repo.updateSavingAccount(acc);
+                    SavingsAccount updatedAcc = acc;
+                    repo.updateSavingAccount(updatedAcc);
                     return;
                 }
             }
@@ -93,7 +95,8 @@ public:
             for (auto& acc : checking) {
                 if (acc.getAccountNumber() == accountID) {
                     acc.deposit(currentUser, amount);
-                    repo.updateCheckingAccount(acc);
+                    CheckingAccount updatedAcc = acc;
+                    repo.updateCheckingAccount(updatedAcc);
                     return;
                 }
             }
@@ -101,14 +104,15 @@ public:
         }
 
         void addSavingAcc( SavingsAccount account ) {
-            repo.addSavingAcc(account);
             currentUser.addAccount(account.getAccountNumber());
             repo.updateUser(currentUser.getID(), currentUser);
+            repo.addSavingAcc(account);
         }
         void addCheckingAcc( CheckingAccount account ) {
-            repo.addCheckingAcc(account);
             currentUser.addAccount(account.getAccountNumber());
             repo.updateUser(currentUser.getID(), currentUser);
+            repo.addCheckingAcc(account);
+            repo.save();
         }
 
         bool login(string email, string passsword) {
@@ -123,6 +127,7 @@ public:
 
         void logout() {
             currentUser = User();
+            repo.save();
         }
 
         void save() {
