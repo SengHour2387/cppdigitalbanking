@@ -14,20 +14,28 @@ public:
         vector<SavingsAccount> savings = repo.getAllSavingAcc();
         for (auto& acc : savings) {
             if (acc.getAccountNumber() == accountID) {
-                 acc.withdraw(currentUser, amount);
-                 SavingsAccount updatedAcc =  acc;
-                repo.updateSavingAccount(updatedAcc);
-                return;
+                 if(acc.withdraw(currentUser, amount)) {
+                    SavingsAccount updatedAcc =  acc;
+                    repo.updateSavingAccount(updatedAcc);
+                    return;
+                 } else {
+                    cout << "Withdaw from " << accountID << "is failed"<<endl;
+                    return;
+                 }
             }
         }
 
         vector<CheckingAccount> checking = repo.getAllCheckingAcc();
         for (auto& acc : checking) {
             if (acc.getAccountNumber() == accountID) {
-                acc.withdraw(currentUser, amount);
-                CheckingAccount updatedAcc = acc;
+                if(acc.withdraw(currentUser, amount)) {
+                    CheckingAccount updatedAcc = acc;
                 repo.updateCheckingAccount(updatedAcc);
                 return;
+                } else {
+                    cout << "Withdaw from " << accountID << "is failed"<<endl;
+                }
+                
             }
         }
         cout << "Account not found." << endl;
@@ -49,7 +57,7 @@ public:
                 if (acc.getAccountNumber() == id) {
                     cout << "[Savings Account] Account #: " << acc.getAccountNumber()
                          << ", Balance: " << acc.getBalance()
-                         << ", Interest Rate: " << acc.getInterestRate() << endl;
+                         << ", Interest Rate: " << acc.getAnnualInterestRate() << endl;
                     found = true;
                     break;
                 }
@@ -73,7 +81,7 @@ public:
 
         void signUp(User user) {             
             CheckingAccount usd = CheckingAccount(
-                0, 10, chrono::system_clock::now().time_since_epoch().count()
+                0, 10, chrono::system_clock::now().time_since_epoch().count()*(-1)
             );
             user.addAccount(usd.getAccountNumber());
             repo.addUser(user);

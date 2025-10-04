@@ -3,7 +3,11 @@
 using namespace std;
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <ctime>
 #include "user.h"
+
+using namespace chrono;
 
 class Account {
     protected:
@@ -58,18 +62,59 @@ class Account {
 };
 
 class SavingsAccount : public Account {
-    double interestRate;
+    long long accountCreationDate;  
+    long long lastInterestAppliedDate;
+
     public:
-        double getInterestRate() const {
-            return interestRate;
+        SavingsAccount():Account() {
+            accountCreationDate = std::time(nullptr);
+        lastInterestAppliedDate = accountCreationDate;
+        };
+        SavingsAccount(double balance, int interestRate, int accountNum) : Account(balance, accountNum, 0) {
+        accountCreationDate = std::time(nullptr);
+        lastInterestAppliedDate = accountCreationDate;
         }
-        SavingsAccount():Account() {};
-        SavingsAccount(double balance, double interestRate,int accountNum) 
-        : Account(balance, accountNum,0) {
-            this->interestRate = interestRate;
+        SavingsAccount(double balance, long long date, long long lastDate, int accountNum) : Account(balance, accountNum, 0) {
+        accountCreationDate = std::time(nullptr);
+        lastInterestAppliedDate = accountCreationDate;
+
         }
 
-        
+    long long getAccCreationDate() {
+        return accountCreationDate;
+    }
+
+    long long getLastAppliedDate() {
+        return lastInterestAppliedDate;
+    }
+
+    double getAnnualInterestRate() const {
+        if (balance <= 25000) return 0.0020;
+        else if (balance <= 50000) return 0.0025;
+        else if (balance <= 100000) return 0.0035;
+        else return 0.0050;
+    }
+
+    void applyInterest(double rate) {
+        long long now = std::time(nullptr);
+        long long diff = now - lastInterestAppliedDate;
+
+        if (diff >= 30 * 24 * 60 * 60) {
+            balance += balance * rate;
+            lastInterestAppliedDate = now;
+            cout << "Interest applied! New balance: " << balance << "\n";
+        }
+    }
+
+    bool deposit(User user, double amount) {
+        applyInterest(getAnnualInterestRate());
+        return Account::deposit(user, amount);
+    }
+
+    bool withdraw(User user, double amount) {
+        applyInterest(getAnnualInterestRate());
+        return Account::withdraw(user, amount);
+    }   
 
 };
 

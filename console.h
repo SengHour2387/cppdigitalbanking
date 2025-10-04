@@ -42,12 +42,11 @@ public:
 
         cout << "Enter your name: ";
         cin >> name;
-        cout<< "Enter your id: ";
-        cin >> id;
         cout << "Enter your email: ";
         cin >> email;
         cout << "Enter your password: ";
         cin >> password;
+        id = chrono::system_clock::now().time_since_epoch().count()*(-1);
         User user = User(id, name, email, password);
         return user;
     }
@@ -70,7 +69,6 @@ public:
         cout << "Enter amount to withdraw: ";
         cin >> amount;
         bank.withdraw(amount, accountID);
-        cout << "Withdraw complete." << endl;
     }
 
     static void createAccount(Bank& bank) {
@@ -135,7 +133,7 @@ public:
         cout << "Enter interest rate (as a decimal, e.g., 0.05 for 5%): ";
         cin >> interestRate;
         cout << "Please remember your account number: ";
-        accountNum = chrono::system_clock::now().time_since_epoch().count();
+        accountNum = chrono::system_clock::now().time_since_epoch().count()*(-1);
         cout << accountNum << endl;
 
         SavingsAccount account = SavingsAccount(balance, interestRate, accountNum);
@@ -151,7 +149,7 @@ public:
         cout << "Enter overdraft limit: ";
         cin >> overDraftLimit;
         cout << "Please remember your account number: ";
-        accountNum = chrono::system_clock::now().time_since_epoch().count();
+        accountNum = chrono::system_clock::now().time_since_epoch().count()*(-1);
         cout << accountNum << endl;
 
         CheckingAccount account = CheckingAccount(balance, overDraftLimit, accountNum);

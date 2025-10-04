@@ -61,11 +61,13 @@ public:
             size_t accountNumber = account.getAccountNumber();
             size_t balance = account.getBalance();
             size_t type = account.getType();
-            size_t interestRate = account.getInterestRate();
+            size_t interestRate = account.getAnnualInterestRate();
+            size_t lastApplied = account.getLastAppliedDate();
             file.write(reinterpret_cast<const char*>(&accountNumber), sizeof(accountNumber));
             file.write(reinterpret_cast<const char*>(&balance), sizeof(balance));
             file.write(reinterpret_cast<const char*>(&type), sizeof(type));
             file.write(reinterpret_cast<const char*>(&interestRate), sizeof(interestRate));
+            file.write(reinterpret_cast< const char*>(&lastApplied),sizeof(lastApplied));
         }
 
     }
@@ -80,12 +82,14 @@ public:
                 size_t balance;
                 size_t type;
                 size_t interestRate;
+                size_t lastApplied;
                 file.read(reinterpret_cast<char*>(&accountNumber), sizeof(accountNumber));
                 file.read(reinterpret_cast<char*>(&balance), sizeof(balance));
                 file.read(reinterpret_cast<char*>(&type), sizeof(type));
                 file.read(reinterpret_cast<char*>(&interestRate), sizeof(interestRate));
+                file.read(reinterpret_cast<char*>(&lastApplied),sizeof(lastApplied));
 
-                SavingsAccount account = SavingsAccount(balance,interestRate,accountNumber);
+                SavingsAccount account = SavingsAccount(balance,interestRate,lastApplied,accountNumber);
                 all_account.push_back(account);
             }
             cout << allSize <<"Saving Account data loaded successfully." << endl;
