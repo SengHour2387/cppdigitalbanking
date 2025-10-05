@@ -14,6 +14,7 @@ public:
 
     static int displayMenu() {
         int choice;
+    cout << "-------------------------------" << endl;
         cout << "Welcome to the Bank System" << endl;
         cout << "1. Sign Up" << endl;
         cout << "2. Log In" << endl;
@@ -24,7 +25,8 @@ public:
     }
 
     static int displayUserMenu() {
-    cout << "User Menu" << endl;
+    cout << "------------------------" << endl;
+    cout << "--- User Menu ---" << endl;
     cout << "1. Create Account " << endl;
     cout << "2. Deposit" << endl;
     cout << "3. Withdraw" << endl;
@@ -40,7 +42,6 @@ public:
     static User getUserInput() {
         string name, email, password;
         int id;
-
         cout << "Enter your name: ";
         cin >> name;
         cout << "Enter your email: ";
@@ -54,6 +55,7 @@ public:
     static void depositMenu(Bank& bank) {
         int accountID;
         double amount;
+        cout << "---- Deposit ---" << endl;
         cout << "Enter account number to deposit into: ";
         cin >> accountID;
         cout << "Enter amount to deposit: ";
@@ -65,6 +67,7 @@ public:
     static void withdrawMenu(Bank& bank) {
         int accountID;
         double amount;
+        cout << "---- Withdraw ---" << endl;
         cout << "Enter account number to withdraw from: ";
         cin >> accountID;
         cout << "Enter amount to withdraw: ";
@@ -73,7 +76,8 @@ public:
     }
 
     static void createAccount(Bank& bank) {
-        cout << "Create Account" << endl;
+        cout << "--------------------------" << endl;
+        cout << "---Create Account---" << endl;
         cout << "1. Savings Account" << endl;
         cout << "2. Checking Account" << endl;
         cout << "Select account type: ";
@@ -95,6 +99,7 @@ public:
     static void transferMenu(Bank& bank) {
         int fromAccountID, toAccountID;
         double amount;
+        cout << "---- Transfer ---" << endl;
         cout << "Enter your source account number: ";
         cin >> fromAccountID;
         cout << "Enter target account number: ";
@@ -106,6 +111,7 @@ public:
 
     static void signUp(Bank& bank) {
         string name, email, password;
+        cout << "---- Sign Up ---" << endl;
         cout << "Enter your name: ";
         cin.ignore();
         getline(cin, name);
@@ -123,6 +129,7 @@ public:
 
     static bool logIn(Bank& bank) {
         string email, password;
+        cout << "---- Log In ---" << endl;
         cout << "Enter your email: ";
         cin.ignore();
         getline(cin, email);
