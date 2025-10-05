@@ -138,18 +138,16 @@ public:
     }
 
     static SavingsAccount getSavingAccInput() {
-        double balance, interestRate;
         int accountNum;
-
+        double balance;
+        
         cout << "Enter initial balance: ";
         cin >> balance;
-        cout << "Enter interest rate (as a decimal, e.g., 0.05 for 5%): ";
-        cin >> interestRate;
         cout << "Please remember your account number: ";
         accountNum = chrono::system_clock::now().time_since_epoch().count()*(-1);
         cout << accountNum << endl;
 
-        SavingsAccount account = SavingsAccount(balance, interestRate, accountNum);
+        SavingsAccount account = SavingsAccount(balance, accountNum);
         return account;
     }
 

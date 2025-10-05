@@ -31,6 +31,7 @@ class Account {
         Account() {
             this->balance = 0;
         };
+
         Account( double balance, int accountNumber, int type) {
             this->type = type;
             this->accountNumber = accountNumber;
@@ -73,7 +74,7 @@ class SavingsAccount : public Account {
             accountCreationDate = std::time(nullptr);
         lastInterestAppliedDate = accountCreationDate;
         };
-        SavingsAccount(double balance, int interestRate, int accountNum) : Account(balance, accountNum, 0) {
+        SavingsAccount(double balance, int accountNum) : Account(balance, accountNum, 0) {
         accountCreationDate = std::time(nullptr);
         lastInterestAppliedDate = accountCreationDate;
         }
