@@ -35,9 +35,12 @@ int main() {
                 BankConsole::withdrawMenu(bank);
                 break;
             case 4:
-                bank.viewAccounts();
+                BankConsole::transferMenu(bank);
                 break;
             case 5:
+                bank.viewAccounts();
+                break;
+            case 6:
                 cout << "Logging out..." << endl;
                 running = false;
                 break;

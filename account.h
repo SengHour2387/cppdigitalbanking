@@ -58,6 +58,9 @@ class Account {
             cout << user.getEmail() << " doesn't own this account!! "<<endl;
             return false;
         }
+        void credit(double amount) {
+            balance += amount;
+        }
 
 };
 
@@ -117,8 +120,6 @@ class SavingsAccount : public Account {
     }   
 
 };
-
-
 class CheckingAccount : public Account {
     double overdraftLimit;
     public:
@@ -138,7 +139,7 @@ class CheckingAccount : public Account {
             if (id == accountNumber) {
                 if (balance + overdraftLimit >= amount) {
                     balance -= amount;
-                    cout << "Withdrawn $" << amount << " successfully. New balance: $" << balance << endl;
+                    cout << "Transfer $" << amount << " successfully. New balance: $" << balance << endl;
                     if (balance < 0)
                         cout << "Warning: You are using $" << -balance << " of your overdraft limit." << endl;
                     return true;

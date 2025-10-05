@@ -28,8 +28,9 @@ public:
     cout << "1. Create Account " << endl;
     cout << "2. Deposit" << endl;
     cout << "3. Withdraw" << endl;
-    cout << "4. View Account" << endl;
-    cout << "5. Logout" << endl;
+    cout << "4. Transfer" << endl;
+    cout << "5. View Account" << endl;
+    cout << "6. Logout" << endl;
     cout << "Please select an option: ";
     int choice;
     cin >> choice;
@@ -72,7 +73,7 @@ public:
     }
 
     static void createAccount(Bank& bank) {
-        cout << "\nCreate Account" << endl;
+        cout << "Create Account" << endl;
         cout << "1. Savings Account" << endl;
         cout << "2. Checking Account" << endl;
         cout << "Select account type: ";
@@ -89,6 +90,18 @@ public:
         } else {
             cout << "Invalid account type." << endl;
         }
+    }
+
+    static void transferMenu(Bank& bank) {
+        int fromAccountID, toAccountID;
+        double amount;
+        cout << "Enter your source account number: ";
+        cin >> fromAccountID;
+        cout << "Enter target account number: ";
+        cin >> toAccountID;
+        cout << "Enter amount to transfer: ";
+        cin >> amount;
+        bank.transfer(fromAccountID, toAccountID, amount);
     }
 
     static void signUp(Bank& bank) {

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "user.h"
 #include <vector>
+#include "account.h"
 #include "repo.h"
 #include <chrono>
 using namespace std;
@@ -55,8 +56,8 @@ public:
             bool found = false;
             for (const auto& acc : savings) {
                 if (acc.getAccountNumber() == id) {
-                    cout << "[Savings Account] Account #: " << acc.getAccountNumber()
-                         << ", Balance: " << acc.getBalance()
+                    cout << "[Savings Account] Account number: " << acc.getAccountNumber()
+                         << ", Balance: " <<"$" << acc.getBalance()
                          << ", Interest Rate: " << acc.getAnnualInterestRate() << endl;
                     found = true;
                     break;
@@ -64,8 +65,8 @@ public:
             }
             for (const auto& acc : checking) {
                 if (acc.getAccountNumber() == id) {
-                    cout << "[Checking Account] Account #: " << acc.getAccountNumber()
-                         << ", Balance: " << acc.getBalance()
+                    cout << "[Checking Account] Account number: " << acc.getAccountNumber()
+                         << ", Balance: " << "$" << acc.getBalance()
                          << ", Overdraft Limit: " << acc.getOverdraftLimit() << endl;
                     found = true;
                     break;
@@ -75,6 +76,85 @@ public:
                 cout << "Account ID " << id << " not found in system." << endl;
             }
         }
+    }
+
+    void transfer(int fromAccountID, int toAccountID, double amount) {
+
+    vector<SavingsAccount> savingsSrc = repo.getAllSavingAcc();
+    for (auto& acc : savingsSrc) {
+            if (acc.getAccountNumber() == fromAccountID) {
+                if (!acc.withdraw(currentUser, amount)) {
+                    cout << "Transfer failed: unable to withdraw from source account." << endl;
+                    return;
+                }
+                repo.updateSavingAccount(acc);
+                Account target = repo.findAccount(toAccountID);
+                if (target.getAccountNumber() == 0) {
+                    cout << "Transfer failed: target account not found." << endl;
+                    acc.credit(amount);
+                    repo.updateSavingAccount(acc);
+                    return;
+                }
+                vector<SavingsAccount> savings = repo.getAllSavingAcc();
+                for (auto& t : savings) {
+                    if (t.getAccountNumber() == toAccountID) {
+                        t.credit(amount);
+                        repo.updateSavingAccount(t);
+                        cout << "Transfer successful." << endl;
+                        return;
+                    }
+                }
+                vector<CheckingAccount> checking = repo.getAllCheckingAcc();
+                for (auto& t : checking) {
+                    if (t.getAccountNumber() == toAccountID) {
+                        t.credit(amount);
+                        repo.updateCheckingAccount(t);
+                        cout << "Transfer successful." << endl;
+                        return;
+                    }
+                }
+                cout << "Transfer failed: unable to credit target account." << endl;
+                return;
+            }
+        }
+
+    vector<CheckingAccount> checkingSrc = repo.getAllCheckingAcc();
+    for (auto& acc : checkingSrc) {
+            if (acc.getAccountNumber() == fromAccountID) {
+                if (!acc.withdraw(currentUser, amount)) {
+                    cout << "Transfer failed: unable to withdraw from source account." << endl;
+                    return;
+                }
+                repo.updateCheckingAccount(acc);
+
+                // Credit target
+                vector<SavingsAccount> savings = repo.getAllSavingAcc();
+                for (auto& t : savings) {
+                    if (t.getAccountNumber() == toAccountID) {
+                        t.credit(amount);
+                        repo.updateSavingAccount(t);
+                        cout << "Transfer successful." << endl;
+                        return;
+                    }
+                }
+                vector<CheckingAccount> checking = repo.getAllCheckingAcc();
+                for (auto& t : checking) {
+                    if (t.getAccountNumber() == toAccountID) {
+                        t.credit(amount);
+                        repo.updateCheckingAccount(t);
+                        cout << "Transfer successful." << endl;
+                        return;
+                    }
+                }
+                cout << "Transfer failed: target account not found." << endl;
+                // refund
+                acc.credit(amount);
+                repo.updateCheckingAccount(acc);
+                return;
+            }
+        }
+
+        cout << "Source account not found." << endl;
     }
 
     Bank() {};
